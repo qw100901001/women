@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import schedule
 
 from bs4 import BeautifulSoup
+a=0
 
 s = execjs.compile(open(r'info.js', 'r', encoding='utf-8').read())
 dicts=[ {"name":12},{"name":2323}]
@@ -43,6 +44,7 @@ def is_date_in_range(start_date, end_date, check_date):
     return start_date <= check_date <= end_date 
 # 时间戳转换成日期
 def get_time(ctime):
+    print("a",a)
     timeArray = time.localtime(int(ctime / 1000))
     otherStyleTime = time.strftime("%Y-%m-%d", timeArray)
     print(str(otherStyleTime),searchText)
@@ -66,34 +68,31 @@ def main():
     a={
         "name":"1"
     }
-    if 'name' in a:
-         print("true")
-
-    print(hasattr(a,"name"))     
-    # getCount(page,page_count)
-    # while Ture代码块，挂起程序，睡眠时间结束后调用函数名进行执行
-    # job_every_1_minutes()
-    # for item in dicts:
-    #     page+=10
-    #     print(page)
-    #     time.sleep(3)
-    tabIndex=2
+    haha()
+   
+      
+def haha():
+    tabIndex=1
     tabIndex+=1
     arr=[1,2,3,4]
     length=len(arr)
-    print(tabIndex==length-1,1,length)
-    
-    try :
-        aa
-        print("")
-    except:
-         print("错误")
-    
+    for page in range(1,5):
+        print("tabIndex",tabIndex)
+        tabIndex+=1
+        try:
+            a["ss"]
+        except:
+            if tabIndex==length :
+                print("合理")
+                return
+            else:
+                print("不合理")
+        print('继续')    
 
     
            
 
 if __name__ == "__main__":
     main()
-    get_time(1700289011000)
+    
    

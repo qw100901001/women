@@ -31,7 +31,6 @@ cookies = {
 # js = execjs.compile("function(retun 1)")
 contents=open(r'a.txt', 'r', encoding='utf-8').read()
  
-print(contents)
 note_count = 0
 
 # 向csv文件写入表头  笔记数据csv文件
