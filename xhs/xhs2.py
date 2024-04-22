@@ -110,7 +110,8 @@ def saveComment(comment,data_dict):
             if "ip_location" in comment:
                 if comment["ip_location"]=='广东':
                     data_dict["IP属地"]=comment["ip_location"]
-                    writer.writerow(data_dict)  
+                    if comment in '价':
+                        writer.writerow(data_dict)  
         if "sub_comments" in comment:
             if comment["sub_comments"]:
                 writeRowHandler(comment["sub_comments"],data_dict)
