@@ -87,6 +87,7 @@ body {
   line-height: 0.26rem;
   color: #fff;
   background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
 }
 .s-card:hover {
   background: #ffd156;

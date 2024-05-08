@@ -15,21 +15,21 @@
       <div class="s-line"></div>
       <div class="s-gj">邀约 / 销售 内部工具箱</div>
     </div>
-    <div class="s-card">
+    <div class="s-card" id="hbGenerator">
       <div class="s-title">海报生成器</div>
       <div class="s-desc">生成客户专属的婚礼秀海报、客户专属抽奖码等</div>
-      <div class="s-location" id="hbGenerator">
+      <div class="s-location" >
         <div class="arrow"></div>
         <div>Postor Maker</div>
       </div>
     </div>
-    <div class="s-card s-namecard">
+    <div class="s-card s-namecard" id="mpGenerator">
       <div class="s-title">名片生成器</div>
       <div class="s-desc">
         <span class="no-wrap"> 生成"喜淘科技"、"婚礼猫"、</span>
         "希乐曼"、"美悦"的名片
       </div>
-      <div class="s-location" id="mpGenerator">
+      <div class="s-location" >
         <div class="arrow"></div>
         <div>Business Card</div>
       </div>
@@ -49,10 +49,10 @@
       const hbGenerator = document.getElementById("hbGenerator");
       const mpGenerator = document.getElementById("mpGenerator");
       hbGenerator.onclick = function () {
-        location.href="https://static.xitaoinfo.com/namecard/together.html"
+        location.href="https://static.xitaoinfo.com/poster.html"
       };
       mpGenerator.onclick = function (){
-        location.href="https://static.xitaoinfo.com/poster.html"
+        location.href="https://static.xitaoinfo.com/namecard/together.html"
       };
     });
   </script>
