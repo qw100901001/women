@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>generator</title>
+    <link rel="stylesheet" href="./generator.css" />
+  </head>
+  <body>
+    <!-- container -->
+    <div class="s-container">
+      <div class="s-group">GROUP</div>
+      <div class="s-xitao">XITAO</div>
+      <div class="s-line"></div>
+      <div class="s-gj">邀约 / 销售 内部工具箱</div>
+    </div>
+    <div class="s-card">
+      <div class="s-title">海报生成器</div>
+      <div class="s-desc">生成客户专属的婚礼秀海报、客户专属抽奖码等</div>
+      <div class="s-location" id="hbGenerator">
+        <div class="arrow"></div>
+        <div>Postor Maker</div>
+      </div>
+    </div>
+    <div class="s-card s-namecard">
+      <div class="s-title">名片生成器</div>
+      <div class="s-desc">
+        <span class="no-wrap"> 生成"喜淘科技"、"婚礼猫"、</span>
+        "希乐曼"、"美悦"的名片
+      </div>
+      <div class="s-location" id="mpGenerator">
+        <div class="arrow"></div>
+        <div>Business Card</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    // 载入业务代码
+    (function () {
+      const sm = document.createElement("script");
+      sm.src = "./generator.js";
+      const soso = document.getElementsByTagName("script")[0];
+      soso.parentNode.insertBefore(sm, soso);
+      var s_cards=document.getElementsByClassName("s-card")
+      console.log("s_cards",s_cards)
+    })();
+    document.addEventListener("DOMContentLoaded", function () {
+      const hbGenerator = document.getElementById("hbGenerator");
+      const mpGenerator = document.getElementById("mpGenerator");
+      hbGenerator.onclick = function () {
+        location.href="https://static.xitaoinfo.com/namecard/together.html"
+      };
+      mpGenerator.onclick = function (){
+        location.href="https://static.xitaoinfo.com/poster.html"
+      };
+    });
+  </script>
+</html>
