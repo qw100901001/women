@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>喵星名片生成器3.0</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height, initial-scale=1.0, shrink-to-fit=no ,maximum-scale=1.0, user-scalable=no"/>
+
+    <link rel="stylesheet" href="./calendar.css">
+    <link href="https://static.xitaoinfo.com/poster/poster.css" rel="stylesheet">
+    <style>
+        input[type=text]:focus {
+            outline: none;
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        button {
+            outline: none;
+            border: none
+        }
+
+        .poster-main-wrap {
+            display: flex;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="poster-main-wrap">
+        <div class="poster-form">
+            <div class="poster-control-group">
+                <label for="name">* 客户姓名</label>
+                <input id="name" type="text" placeholder="名称（中文）" class="nameText" value="陈小姐">
+            </div>
+            <div class="poster-control-group">
+                <label for="name_eng">* 举办日期</label>
+                <div id="myCalendar"></div>
+                <input id="name_eng" type="text" value="" onFocus="setday(this)" class="dateText" readonly>
+            </div>
+            <div class="poster-control-group">
+                <label for="job">* 举办时间</label>
+                <input id="job" type="text" placeholder="时间" class="timeText" value="16:30">
+            </div>
+            <div class="poster-control-group">
+                <label for="job_eng" class="">* 举办门店</label>
+                <select name="" id="job_eng" class="store-select storeText" onchange="changeStore(this)">
+                    <option value="希乐曼·白鹅潭店">希乐曼·白鹅潭店</option>
+                    <option value="希乐曼·南风店">希乐曼·南风店</option>
+                    <option value="希乐曼·新洲店">希乐曼·新洲店</option>
+                </select>
+            </div>
+            <div class="poster-control-group">
+                <label for="email">* 举办地址</label>
+                <input id="email" type="text" placeholder="地址" class="addressText" value="广州市荔湾区芳村大道东200号" readonly>
+            </div>
+            <div class="poster-control-group">
+                <label >* 预约码</label>
+                <input  type="text" placeholder="预约码" class="codeText" value="888888" >
+            </div>
+            <div class="poster-controls-btn">
+                <button class="pure-button poster-item-style" onclick="createPoster()">生成海报</button>
+                <a class="pure-button poster-item-style download-poster" download="希乐曼-私享秀.jpg">下载海报</a>
+            </div>
+        </div>
+        <div class="poster-img-wrap">
+            <div class="converted_img">
+                <img src="" alt="" id="converted_img">
+            </div>
+            <div class="poster-item-wrap">
+            </div>
+        </div>
+    </div>
+</div>
+
+<canvas id="canvas" class="hidden"></canvas>
+
+<script src="https://static.xitaoinfo.com/poster/calendar.js"></script>
+<script src="https://static.xitaoinfo.com/poster/poster.js"></script>
+<script>
+    let instance;
+    let nameText = document.querySelector('.nameText');
+    let dateText = document.querySelector('.dateText');
+    let timeText = document.querySelector('.timeText');
+    let storeText = document.querySelector('.storeText');
+    let addressText = document.querySelector('.addressText');
+    let codeText=document.querySelector('.codeText')
+
+    function changeStore($this = {}) {
+        const {value} = $this
+        if (value === '希乐曼·白鹅潭店') {
+            addressText.value = '广州市荔湾区芳村大道东200号'
+        } else if (value === '希乐曼·南风店') {
+            addressText.value = '佛山市禅城区石湾镇和平路12号1506创意城D区8号楼'
+        }else if(value==='希乐曼·新洲店'){
+            addressText.value = '深圳市福田区益田街阳基商业广场G栋四层G401号'
+        }
+    }
+
+    function initDate() {
+        const dateText = document.querySelector('.dateText');
+        const date = new Date().toLocaleDateString();
+        dateText.value = date.replace(/\//g, '-')
+    }
+
+    function checkField() {
+        if (!nameText.value) {
+            alert('请填写用户姓名')
+            return
+        } else if (!timeText.value) {
+            alert('请填写举办时间')
+            return
+
+        } else {
+            if (/^(2[0-3]|[0-1]?\d)[：:][0-5]\d$/.test(timeText.value) !== true) {
+                alert('举办时间格式填写错误')
+                return
+            }
+        }
+        if(!codeText.value){
+            alert('请填写预约码')
+            return
+        }
+        return true
+
+    }
+
+    function createPoster() {
+        if (!checkField()) return
+
+        if (instance) {
+            instance.setOptions(getOptions())
+        } else {
+            new drawImg({
+                width: 1080,
+                height: 2100,
+                ...getOptions()
+            })
+        }
+    }
+
+
+    function getOptions() {
+        return {
+            nameTextValue: nameText.value,
+            dateTextValue: dateText.value,
+            timeTextValue: timeText.value,
+            storeTextValue: storeText.value,
+            addressTextValue: addressText.value,
+            codeTextValue:codeText.value,
+            brandText:'参加希乐曼艺术中心',
+            yhText:'备婚私享秀',
+            bgUrl:'https://static.xitaoinfo.com/poster/ceremon_wedding_show.jpg'
+
+        }
+    }
+
+    window.onload = function () {
+        initDate();
+        instance = new drawImg({
+            width: 1080,
+            height: 2100,
+            ...getOptions()
+        })
+        //初始化海报
+        createPoster();
+    }
+
+
+</script>
+</body>
+</html>

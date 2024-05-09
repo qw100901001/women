@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>海报生成器</title>
+    <link rel="stylesheet" href="https://static.xitaoinfo.com/poster/poster.css">
+</head>
+<body>
+<div class="poster-body-wrap">
+    <div class="activity-type">
+        <div class="activity-item-type active">婚礼秀</div>
+        <div class="activity-item-type">静态私享秀</div>
+        <div class="activity-item-type">抽奖链接</div>
+        <div class="activity-item-type">周年庆</div>
+        <!--        <div class="activity-item-type">签约捷报</div>-->
+    </div>
+    <div class="content" >
+        <div class="poster-nav" id="navHtml">
+            <div class="poster-nav-item active">美悦盛宴</div>
+            <div class="line"></div>
+            <div class="poster-nav-item">希乐曼</div>
+        </div>
+        <iframe id="view" src="https://static.xitaoinfo.com/poster/marryou-wedding-show.html" frameborder="0" scrolling="no"></iframe>
+    </div>
+</div>
+
+</body>
+<script>
+    function setShowType(view) {
+        const activityItemType = document.querySelectorAll('.activity-item-type');
+        const posterNavItem = document.querySelectorAll('.poster-nav-item');
+        const navHtml=document.getElementById("navHtml")
+        activityItemType.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                //侧边栏点击
+                typeIndex = index;
+                const list = Array.from(item.parentNode.children)
+                list.forEach(item => {
+                    item.classList.remove('active')
+                })
+                item.classList.add('active')
+                navHtml.style.display="flex"
+                if (index === 0) {
+                    view.src = "https://static.xitaoinfo.com/poster/marryou-wedding-show.html"
+                } else if (index === 1) {
+                    view.src = "https://static.xitaoinfo.com/poster/marryou-sx-show.html"
+                }else if(index===2){
+                    navHtml.style.display="none"
+                    view.src = "https://static.xitaoinfo.com/poster/lottery.html"
+                }
+                else if(index===3){
+                    navHtml.style.display="none"
+                    view.src = "./anniversary.html"
+                }      
+                //nav初始化active
+                const listL = Array.from(posterNavItem[0].parentNode.children)
+                listL.forEach(item => {
+                    item.classList.remove('active')
+                })
+                posterNavItem[0].classList.add('active')
+
+            }, false)
+        })
+    }
+    function switchNav(view) {
+        const posterNavItem = document.querySelectorAll('.poster-nav-item');
+        posterNavItem.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const list = Array.from(item.parentNode.children)
+                list.forEach(item => {
+                    item.classList.remove('active')
+                })
+                item.classList.add('active')
+
+                if (typeIndex === 0) {
+                    if (index === 0) {
+                        view.src = "https://static.xitaoinfo.com/poster/marryou-wedding-show.html"
+                    } else {
+                        view.src = "https://static.xitaoinfo.com/poster/ceremon-wedding-show.html"
+                    }
+                } else if (typeIndex === 1) {
+                    if (index === 0) {
+                        view.src = "https://static.xitaoinfo.com/poster/marryou-sx-show.html"
+                    } else {
+                        view.src = "https://static.xitaoinfo.com/poster/ceremon-sx-show.html"
+                    }
+                }
+
+            }, false)
+        })
+    }
+
+    let typeIndex = 0
+
+    window.onload = function () {
+        const view = document.getElementById('view')
+        //nav切换
+        switchNav(view);
+        setShowType(view);
+    }
+
+</script>
+</html>

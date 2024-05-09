@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>喵星名片生成器3.0</title>
+    <meta
+      name="viewport"
+      content="width=device-width,height=device-height, initial-scale=1.0, shrink-to-fit=no ,maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      href="https://static.xitaoinfo.com/poster/poster.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./anniversary.css" />
+    <style>
+      input[type="text"]:focus {
+        outline: none;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      button {
+        outline: none;
+        border: none;
+      }
+
+      .poster-main-wrap {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="poster-main-wrap">
+        <div class="poster-form">
+          <div class="poster-control-group">
+            <label for="anniversary">* 几周年</label>
+            <input
+              id="anniversaryInput"
+              type="number"
+              value=""
+              class="dateText"
+              oninput="value=value.replace(/^(0+)|[^\d]+/g,'')"
+            />
+          </div>
+          <div class="poster-control-group">
+            <label for="anniversary">*上传照片</label>
+            <div class="img-wrap">
+              <div class="img-wrap-item">
+                <input
+                  type="file"
+                  value=""
+                  class="file1"
+                  accept="image/png, image/jpeg, image/jpg"
+                />
+                <img alt="" class="img1" />
+                <div class="mask">请选择</div>
+              </div>
+              <div class="img-wrap-item">
+                <input
+                  type="file"
+                  value=""
+                  class="file2"
+                  accept="image/png, image/jpeg, image/jpg"
+                />
+                <img alt="" class="img2" />
+                <div class="mask">请选择</div>
+              </div>
+              <div class="img-wrap-item">
+                <input
+                  type="file"
+                  value=""
+                  class="file3"
+                  accept="image/png, image/jpeg, image/jpg"
+                />
+                <img alt="" class="img3" />
+                <div class="mask">请选择</div>
+              </div>
+            </div>
+          </div>
+          <div class="poster-controls-btn">
+            <button
+              class="pure-button poster-item-style"
+              onclick="createPoster()"
+            >
+              生成海报
+            </button>
+            <a
+              class="pure-button poster-item-style download-poster"
+              download="周年庆.jpg"
+              >下载海报</a
+            >
+          </div>
+        </div>
+        <div class="poster-img-wrap">
+          <div class="converted_img">
+            <img src="" alt="" id="converted_img" />
+          </div>
+          <div class="poster-item-wrap"></div>
+        </div>
+      </div>
+    </div>
+
+    <canvas id="canvas" class="hidden"></canvas>
+    <canvas id="myCanvas" class="hidden" width="917" height="600"></canvas>
+
+    <script src="https://static.xitaoinfo.com/poster/calendar.js"></script>
+    <script src="./anniversary.js"></script>
+    <script>
+      const anniversaryInput = document.getElementById("anniversaryInput");
+      const img1 = document.getElementsByClassName("img1")[0];
+      const img2 = document.getElementsByClassName("img2")[0];
+      const img3 = document.getElementsByClassName("img3")[0];
+
+      function checkField() {
+        console.log("img", img1.src, img2, img3);
+        if (!anniversaryInput.value) {
+          alert("请填写周年时间");
+          return;
+        } else if (!img1.src) {
+          alert("请上传第一张照片");
+          return;
+        } else if (!img2.src) {
+          alert("请上传第二张照片");
+          return;
+        } else if (!img3.src) {
+          alert("请上传第三张照片");
+          return;
+        }
+        return true;
+      }
+
+      function createPoster() {
+        if (!checkField()) return;
+        const data = {
+          anniversaryTime: anniversaryInput.value,
+          src1: img1.src,
+          src2: img2.src,
+          src3: img3.src,
+          bgUrl: "./anniversary.jpg",
+        };
+        new drawImg({
+          width: 1280,
+          height: 2279,
+          data,
+        });
+      }
+
+      function initFileHandler() {
+        const files = document.querySelectorAll('input[type="file"]');
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+        files.forEach((file) => {
+          file.addEventListener("change", function (e) {
+            const img = this.nextElementSibling;
+            const url = URL.createObjectURL(e.target.files[0]);
+            clipImg(url, canvas, img, ctx, 917, 600);
+          });
+        });
+      }
+
+      function clipImg(url, canvas, img, ctx, targetWidth, targetHeight) {
+        const image = new Image();
+        image.src = url;
+        image.onload = function () {
+          const radio = targetHeight / targetWidth;
+          canvas.width = image.width;
+          canvas.height = Math.min(image.width * radio, image.height);
+
+          const cy = Math.max((image.height - canvas.height) / 2, 0);
+          ctx.drawImage(
+            image,
+            0,
+            cy,
+            canvas.width,
+            canvas.height,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          ); // 绘制裁剪后的图片
+          img.src = canvas.toDataURL("image/jpeg");
+        };
+      }
+
+      window.onload = function () {
+        initFileHandler();
+      };
+    </script>
+  </body>
+</html>
