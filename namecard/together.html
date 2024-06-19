@@ -1,0 +1,155 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>喵星名片生成器</title>
+    <style>
+        .nav,
+        .nav-row {
+            width: 100%;
+            height: 60px;
+            background-color: #fff;
+
+        }
+        .nav-row {
+            display: flex;
+            padding: 0 40px;
+            align-items: center;
+
+        }
+        .fixed {
+            position: fixed;
+            width: 100%;
+        }
+        .fixed:after {
+            position: absolute;
+            left: 40px;
+            bottom: 0;
+            content: '';
+            display: block;
+            width: calc(100% - 80px);
+            height: 1px;
+            background-color: #efefef;
+        }
+        .nav-item {
+            position: relative;
+            height: 60px;
+            margin: 0 20px;
+            padding-top: 10px;
+            /*padding: 0 20px;*/
+            /*background-color: #fff;
+            border: 1px solid #2f2f2f;*/
+            color: #333;
+            text-align: center;
+            cursor: pointer;
+        }
+        .nav-item .zh {
+            display: inline-block;
+            width: 100%;
+            font-size: 18px;
+            line-height: 22px;
+        }
+        .nav-item .en {
+            display: inline-block;
+            width: 100%;
+           font-size: 12px;
+            line-height: 16px;
+        }
+        .nav-item.active .zh,
+        .nav-item.active .en {
+            font-weight: 600;
+        }
+        .nav-item.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 80px;
+            height: 3px;
+            margin-left: -40px;
+            background-color: #333;
+            z-index: 1;
+        }
+        .content {
+            width: 100%;
+            height: calc(100vh - 60px);
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="nav">
+        <div class="fixed">
+            <div class="nav-row">
+                <div class="nav-item active" data-page="index-xitao">
+                    <span class="zh">喜淘科技</span>
+                    <span class="en">XITAO</span>
+                </div>
+                <div class="nav-item" data-page="index">
+                    <span class="zh">婚礼猫</span>
+                    <span class="en">HUNLIMAO</span>
+                </div>
+                <div class="nav-item" data-page="index2">
+                    <span class="zh">美悦盛宴</span>
+                    <span class="en">MARRYOU</span>
+                </div>
+                <div class="nav-item" data-page="index-ceremon-02">
+                    <span class="zh">希乐曼</span>
+                    <span class="en">CEREMON</span>
+                </div>
+                <div class="nav-item" data-page="marryou-ceremon">
+                    <span class="zh">美悦×希乐曼</span>
+                    <span class="en">MARRYOU×CEREMON</span>
+                </div>
+                <!-- <div class="nav-item active" data-page="index2">美悦-广州</div>
+                <div class="nav-item" data-page="index3">美悦-佛山</div>
+                <div class="nav-item" data-page="index">婚礼猫</div> -->
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <iframe id="view" src="https://static.xitaoinfo.com/namecard/index-xitao.html" frameborder="0"></iframe>
+    </div>
+</body>
+<script>
+    function $ (el) { return document.querySelector(el)}
+    function $$ (els) { return document.querySelectorAll(els)}
+    var baseViewUrl = 'https://static.xitaoinfo.com/namecard/'
+    window.addEventListener('DOMContentLoaded', function () {
+        var navItems = $$('.nav-item');
+        var view = $('#view');
+        for (var i = 0, l = navItems.length; i < l; i++) {
+            (function (i) {
+                var navItem = navItems[i];
+                console.log(navItem)
+                navItem.addEventListener('click', function () {
+                    debugger
+                    var page = navItem.attributes['data-page'].value
+                    view.src = baseViewUrl + page + '.html';
+                    setItemClassName(navItem, 'active');
+                })
+            })(i)
+        }
+    })
+
+    function setItemClassName (cur, classname) {
+        var siblings = cur.parentNode.children
+        for (var i = 0, l = siblings.length; i < l; i++) {
+            (function (i) {
+                var item = siblings[i];
+                item.classList.remove(classname)
+            })(i)
+        }
+        cur.classList.add(classname)
+    }
+
+</script>
+</html>
