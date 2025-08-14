@@ -1078,15 +1078,36 @@
       .nav-item.active {
         font-weight: 600;
       }
+      .email-wrap-group {
+        display: flex;
+      }
+      .email-wrap {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+      }
+      .card_back {
+        display: none;
+      }
+      .card_back.active {
+        display: block;
+      }
     </style>
   </head>
   <body>
     <!--<img id="bg" class="hidden" src="v2_img/bg.jpg"/>-->
-    <img id="bg" class="hidden" src="v2_img/marryou_ceremon_front.jpg" />
+    <img id="bg" class="hidden" src="v2_img/bg2_01.jpg" />
     <!--<img id="icon_phone" class="hidden" src="v2_img/icon_phone.png"/>-->
     <!--<img id="icon_email" class="hidden" src="v2_img/icon_email.png"/>-->
     <!-- <img id="demo_qr" class="hidden" src="v2_img/demo_qr.jpg" /> -->
     <canvas id="canvas" class="hidden"></canvas>
+    <div class="nav">
+      <div class="nav-row">
+        <div class="nav-item active" onclick="switchCity(this, 0)">广州</div>
+        <div class="nav-line"></div>
+        <div class="nav-item" onclick="switchCity(this, 1)">深圳</div>
+      </div>
+    </div>
 
     <!-- <div class="nav">
         <div class="nav-row">
@@ -1123,9 +1144,12 @@
         <label for="place">门店</label>
         <input id="place" type="text" placeholder="门店" />
       </div> -->
-      <div class="pure-control-group">
+      <div class="pure-control-group email-wrap-group">
         <label for="email">邮箱</label>
-        <input id="email" type="email" placeholder="邮箱" />
+        <div class="email-wrap">
+          <input id="email" type="email" placeholder="邮箱" />
+          <span>@hunlimao.com</span>
+        </div>
       </div>
       <!-- <div class="pure-control-group">
         <label for="file">上传二维码</label>
@@ -1155,13 +1179,13 @@
           id="converted_link"
           class="pure-button pure-button-primary"
           download="名片正面.jpg"
-          href="v2_img/marryou_ceremon_front.jpg"
+          href="v2_img/bg2_01.jpg"
           >下载正面</a
         >
         <a
           class="pure-button pure-button-primary back_link"
           download="名片背面.jpg"
-          href="v2_img/marryou_ceremon_back_2025814.jpg"
+          href="v2_img/namecard_back_gz_2025814.jpg"
           >下载背面</a
         >
       </div>
@@ -1175,16 +1199,46 @@
       <img
         id="converted_img"
         class="pure-img preview-img"
-        src="https://static.xitaoinfo.com/namecard/v2_img/marryou_ceremon_front.jpg"
+        src="https://static.xitaoinfo.com/namecard/v2_img/bg2_01.jpg"
       />
       <br />
       <img
-        class="pure-img preview-img back_preview"
-        src="https://static.xitaoinfo.com/namecard/v2_img/marryou_ceremon_back_2025814.jpg"
+        class="pure-img preview-img back_preview card_back active"
+        src="https://static.xitaoinfo.com/namecard/v2_img/namecard_back_gz_2025814.jpg"
+      />
+      <img
+        class="pure-img preview-img back_preview card_back"
+        src="https://static.xitaoinfo.com/namecard/v2_img/namecard_back_gz_2025814.jpg"
       />
     </div>
 
     <script>
+      function switchCity(e, index) {
+        var items = e.parentNode.querySelectorAll(".nav-item");
+        for (var i = 0, l = items.length; i < l; i++) {
+          var item = items[i];
+          i === index
+            ? item.classList.add("active")
+            : item.classList.remove("active");
+        }
+        const backCard = document.getElementsByClassName("card_back");
+        for (var i = 0, l = backCard.length; i < l; i++) {
+          var item = backCard[i];
+          i === index
+            ? item.classList.add("active")
+            : item.classList.remove("active");
+        }
+        if (index === 1) {
+          place = "深圳市福田区益田街阳基商业广场G栋四层G401号";
+          back_link.href = "v2_img/namecard_back_gz_2025814.jpg";
+        } else {
+          place = "广州市海珠区上冲南约32号之三E栋401";
+          back_link.href = "v2_img/namecard_back_gz_2025814.jpg";
+        }
+        convertCanvasToImage({
+          color: namecards[index].color,
+        });
+      }
       function $(selector) {
         return document.querySelector(selector);
       }
@@ -1196,7 +1250,7 @@
         email = "",
         qq = "",
         tel = "4000-676-560",
-        place = "";
+        place = "广州市海珠区上冲南约32号之三E栋401";
       var bg = $("#bg");
       var icon_phone = $("#icon_phone");
       var icon_email = $("#icon_email");
@@ -1248,7 +1302,7 @@
         $("#job").value = "策划师";
         // $("#job_eng").value = "Co-Founder";
         $("#mobile").value = "(+86)18680200620";
-        $("#email").value = "jun5nee@qq.com";
+        $("#email").value = "jun5nee";
         // $("#qq").value = "1985305848";
       }
       var ratio = 1098 / 2820;
@@ -1268,7 +1322,6 @@
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-        // console.log("bg",bg)
 
         ctx.beginPath();
         ctx.lineWidth = 8 * ratio;
@@ -1309,7 +1362,7 @@
         ctx.fillText(TEL, 260 * ratio + mobileW, 1300 * ratio);
 
         if (!!email) {
-          var Email = "E-mail: " + email;
+          var Email = "E-mail: " + email + "@hunlimao.com";
           ctx.font = 64 * ratio + "px PingFangSC-Light";
           ctx.fillText(Email, 200 * ratio, 1420 * ratio);
         }
@@ -1333,9 +1386,21 @@
         $("#email").value = "";
         // $("#qq").value = "";
       }
+      function disableKeyWord(dom,word){
+        dom.addEventListener("input", function (event) {
+          const forbiddenLetter = word; // 设置要禁止输入的字母
+          const inputValue = event.target.value;
+          const newValue = inputValue.replace(
+            new RegExp(forbiddenLetter, "ig"),
+            ""
+          ); // 使用正则表达式将禁止的字母替换为空字符串
+          event.target.value = newValue;
+        });
+      }
 
       window.onload = () => {
         demo();
+        disableKeyWord(document.getElementById("email"),'@')
         convertCanvasToImage();
       };
     </script>
