@@ -11,7 +11,7 @@ class drawImg {
         this.ctx = this.canvas.getContext('2d')
         this.converted_img = document.getElementById('converted_img')
         this.posterBg = document.querySelector('.poster-bg')
-        this.sxFont = new FontFace('sxFont', 'url(https://static.xitaoinfo.com/poster/SavoyeStd.otf)');
+        this.sxFont = new FontFace('sxFont', 'url(https://static.xitaoinfo.com/poster/CALIFI.TTF)');
         this.sxFont.load().then((font) => {
             document.fonts.add(font);
             this.init(options);
@@ -29,7 +29,6 @@ class drawImg {
         await this.draw1(options).catch(err => err);
         await this.draw2(options).catch(err => err);
         await this.draw3(options).catch(err => err);
-        await this.drawCut().catch(err => err)
         this.canvasToUrl(options)
     }
 
@@ -42,7 +41,7 @@ class drawImg {
         return new Promise((resolve, reject) => {
             // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             let image = new Image();
-            image.src = "https://static.xitaoinfo.com/poster/anniversary_2025320.jpg";
+            image.src = "https://static.xitaoinfo.com/poster/anniversary_new.jpg";
 
             image.crossOrigin = "anonymous"
             image.onload = () => {
@@ -55,16 +54,27 @@ class drawImg {
         })
 
     }
+    roundRect(x, y, width, height, radius) {
+        this.ctx.beginPath()
+        this.ctx.moveTo(x + radius, y)
+        this.ctx.arcTo(x + width, y, x + width, y + height, radius);
+        this.ctx.arcTo(x + width, y + height, x, y + height, radius);
+        this.ctx.arcTo(x, y + height, x, y, radius);
+        this.ctx.arcTo(x, y, x + width, y, radius);
+        this.ctx.closePath();
+    }
     draw1(options) {
         const { src1, src2, src3 } = options.data || {}
         return new Promise((resolve, reject) => {
-            // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             let image = new Image();
             image.src = src1;
-            // this.ctx.rotate(5.2 * Math.PI / 180);
             image.crossOrigin = "anonymous"
             image.onload = () => {
-                this.ctx.drawImage(image, 102, 474, 822, 550);
+                this.ctx.save();
+                this.roundRect(241, 620, 793, 416, 20)
+                this.ctx.clip()
+                this.ctx.drawImage(image, 221, 620, 813, 416);
+                this.ctx.restore();
                 resolve()
             }
             image.onerror = () => {
@@ -81,7 +91,11 @@ class drawImg {
             image.src = src2;
             image.crossOrigin = "anonymous"
             image.onload = () => {
-                this.ctx.drawImage(image, 102, 1070, 822, 550);
+                this.ctx.save();
+                this.roundRect(241, 1074, 793, 416, 20)
+                this.ctx.clip()
+                this.ctx.drawImage(image, 241, 1074, 813, 416);
+                this.ctx.restore();
                 resolve()
             }
             image.onerror = () => {
@@ -98,7 +112,11 @@ class drawImg {
             image.src = src3;
             image.crossOrigin = "anonymous"
             image.onload = () => {
-                this.ctx.drawImage(image, 102, 1680, 822, 550);
+                this.ctx.save();
+                this.roundRect(241, 1532, 793, 416, 20)
+                this.ctx.clip()
+                this.ctx.drawImage(image, 241, 1532, 813, 416);
+                this.ctx.restore();
                 resolve()
             }
             image.onerror = () => {
@@ -127,10 +145,11 @@ class drawImg {
         const myFont = this.sxFont;
         this.ctx.beginPath();
 
-        this.ctx.font = "500 500px 宋体"
-        this.ctx.fillStyle = '#343434';
+        this.ctx.font = "500 266px sxFont"
+        this.ctx.fillStyle = '#A76A0B';
+        this.ctx.textAlign = "start";
         this.ctx.textBaseline = "top";
-        this.ctx.fillText(anniversaryTime, 980, -40);
+        this.ctx.fillText(anniversaryTime, 365, 119);
 
         // 设置阴影属性
         // this.ctx.shadowColor = "rgba(255, 255, 255, 0.2)"; // 淡淡的白色阴影，透明度为 0.5

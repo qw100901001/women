@@ -78,7 +78,7 @@
                   class="file3"
                   accept="image/png, image/jpeg, image/jpg"
                 />
-                <img alt="" class="img3" />
+                <img alt="" class="img3"  />
                 <div class="mask">请选择</div>
               </div>
             </div>
@@ -110,7 +110,7 @@
     <canvas id="myCanvas" class="hidden" width="917" height="600"></canvas>
 
     <script src="https://static.xitaoinfo.com/poster/calendar.js"></script>
-    <script src="./anniversary.js"></script>
+    <script src="./anniversary.js?v=1.1"></script>
     <script>
       const anniversaryInput = document.getElementById("anniversaryInput");
       const img1 = document.getElementsByClassName("img1")[0];
@@ -136,7 +136,7 @@
       }
 
       function createPoster() {
-        if (!checkField()) return;
+        // if (!checkField()) return;
         const data = {
           anniversaryTime: anniversaryInput.value,
           src1: img1.src,
