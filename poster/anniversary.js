@@ -144,12 +144,13 @@ class drawImg {
         const { anniversaryTime } = options.data || {};
         const myFont = this.sxFont;
         this.ctx.beginPath();
+        const len = anniversaryTime.length
 
         this.ctx.font = "500 266px sxFont"
         this.ctx.fillStyle = '#A76A0B';
         this.ctx.textAlign = "start";
         this.ctx.textBaseline = "top";
-        this.ctx.fillText(anniversaryTime, 365, 119);
+        this.ctx.fillText(anniversaryTime, 431 - (66 + (len - 1) * 90), 119);
 
         // 设置阴影属性
         // this.ctx.shadowColor = "rgba(255, 255, 255, 0.2)"; // 淡淡的白色阴影，透明度为 0.5
