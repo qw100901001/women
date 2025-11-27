@@ -41,7 +41,7 @@ class drawImg {
         return new Promise((resolve, reject) => {
             // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             let image = new Image();
-            image.src = "https://static.xitaoinfo.com/poster/anniversary_new.jpg";
+            image.src = "https://static.xitaoinfo.com/poster/anniversary_1.2.jpg";
 
             image.crossOrigin = "anonymous"
             image.onload = () => {
@@ -71,9 +71,9 @@ class drawImg {
             image.crossOrigin = "anonymous"
             image.onload = () => {
                 this.ctx.save();
-                this.roundRect(241, 620, 793, 416, 20)
+                this.roundRect(293, 520, 692, 451, 10)
                 this.ctx.clip()
-                this.ctx.drawImage(image, 221, 620, 813, 416);
+                this.ctx.drawImage(image, 293, 520, 692, 451);
                 this.ctx.restore();
                 resolve()
             }
@@ -92,9 +92,9 @@ class drawImg {
             image.crossOrigin = "anonymous"
             image.onload = () => {
                 this.ctx.save();
-                this.roundRect(241, 1074, 793, 416, 20)
+                this.roundRect(293, 1007, 692, 451, 10)
                 this.ctx.clip()
-                this.ctx.drawImage(image, 241, 1074, 813, 416);
+                this.ctx.drawImage(image, 293, 1007, 692, 451);
                 this.ctx.restore();
                 resolve()
             }
@@ -113,9 +113,9 @@ class drawImg {
             image.crossOrigin = "anonymous"
             image.onload = () => {
                 this.ctx.save();
-                this.roundRect(241, 1532, 793, 416, 20)
+                this.roundRect(293, 1494, 692, 451, 10)
                 this.ctx.clip()
-                this.ctx.drawImage(image, 241, 1532, 813, 416);
+                this.ctx.drawImage(image, 293, 1494, 692, 451);
                 this.ctx.restore();
                 resolve()
             }
