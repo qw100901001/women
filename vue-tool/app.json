@@ -1,0 +1,15 @@
+{
+  "hotel": {
+    "name": "皇冠假日",
+    "cost": 128800
+  },
+  "photo": {
+    "vendor": "GoldenStudio",
+    "cost": 28000
+  },
+  "flower": {
+    "type": "森系",
+    "cost": 15000
+  },
+  "total": 171800
+}
