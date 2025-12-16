@@ -15,7 +15,7 @@
       :disabled="!html"
       @click="makePdf"
     >
-      下载 PDF 喜帖
+      下载 PDF
     </el-button>
 
     <!-- 错误提示 -->
@@ -61,7 +61,7 @@ export default {
 
       const opt = {
         margin: 0,
-        filename: `婚庆喜帖_${Date.now()}.pdf`,
+        filename: `${Date.now()}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true, letterRendering: true },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
