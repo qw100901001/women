@@ -13,7 +13,6 @@ function setRemUnit() {
     const rem = (width / designWidth) * baseFontSize;
     // 设置 html 标签的字体大小
     document.documentElement.style.fontSize = `${rem}px`;
-    console.log("rem", rem)
 }
 
 // 初始化执行一次
