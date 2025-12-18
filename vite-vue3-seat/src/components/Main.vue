@@ -4,7 +4,6 @@ import { ref, onMounted, computed, onUnmounted, watch } from "vue";
 import tableList from "@/assets/table.json";
 import Error from "@/components/Error.vue";
 import List from "@/components/List.vue";
-import fontUrl from "@/assets/sem.ttf";
 
 import { useRouter } from "vue-router";
 
@@ -39,12 +38,15 @@ let resizeHandler = null;
 // 输入框聚焦：键盘弹起时调整表单位置
 const handleInputFocus = () => {
   // 延迟执行：等待键盘完全弹起（200-500ms，适配不同设备）
+  if (searchKey.value && filteredList.value.length) {
+    isDropdownVisible.value = true;
+  }
   clearTimeout(resizeTimer);
   setTimeout(() => {
     const currentWindowHeight = window.innerHeight;
     if (currentWindowHeight < originalWindowHeight) {
       isKeyboardShow.value = true;
-      pageY.value = -(originalWindowHeight - currentWindowHeight - 80) / 2;
+      pageY.value = -(originalWindowHeight - currentWindowHeight - 120) / 2;
     }
   }, 300);
 };
@@ -75,58 +77,6 @@ const updateProgress = () => {
     setTimeout(() => {
       isLoading.value = false;
     }, 800);
-  }
-};
-const loadFont = async () => {
-  const targetFontName = "specific"; // 和@font-face中的font-family一致
-  try {
-    // 1. 创建FontFace实例（优化：补充opentype格式，兼容iOS）
-    const font = new FontFace(
-      targetFontName,
-      `url(${fontUrl}) format('truetype'), url(${fontUrl}) format('opentype')`
-    );
-    // 2. 加载字体
-    console.log("font", font);
-    await font.load();
-    // 3. 添加到文档的字体列表
-    document.fonts.add(font);
-    // ========== 新增：iOS专属的字体渲染触发逻辑 ==========
-    // 3.1 等待字体库就绪（确保字体被注册）
-    await document.fonts.ready;
-    // 3.2 验证字体是否真的可用（iOS关键检测步骤）
-    const isFontAvailable = document.fonts.check(`12px ${targetFontName}`);
-    if (!isFontAvailable) {
-      console.warn("字体已加载，但系统未识别，尝试强制触发渲染");
-    }
-    // 3.3 创建隐藏元素强制使用字体（触发iOS的字体使用检测）
-    const testEl = document.createElement("div");
-    testEl.style.cssText = `
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-      font-family: ${targetFontName};
-      content: '测试字体';
-    `;
-    document.body.appendChild(testEl);
-    // 3.4 读取布局属性触发DOM重绘（iOS必须步骤）
-    testEl.offsetHeight;
-    // 3.5 可选：移除测试元素（也可以保留，不影响布局）
-    // document.body.removeChild(testEl);
-    // 3.6 延迟应用字体（应对iOS渲染延迟）
-    setTimeout(() => {
-      // 给需要的元素手动应用字体（如果全局没设置的话）
-      document
-        .querySelectorAll('[style*="font-family: specific"], .font-specific')
-        .forEach((el) => {
-          el.style.fontFamily = targetFontName;
-        });
-    }, 100);
-    // ====================================================
-    console.log("字体加载完成，已触发iOS渲染");
-  } catch (error) {
-    console.error("字体加载失败：", error);
-  } finally {
-    updateProgress();
   }
 };
 const loadImage = (imgUrl) => {
@@ -278,7 +228,9 @@ const handleRouter = () => {
             <span class="concat">&</span>
           </div>
           <div class="flex-column br">
-            <span class="zh">梁<span style="visibility: hidden;">X</span>艳</span>
+            <span class="zh"
+              >梁<span style="visibility: hidden">X</span>艳</span
+            >
             <span class="en">IRIS LEUNG</span>
           </div>
         </div>
