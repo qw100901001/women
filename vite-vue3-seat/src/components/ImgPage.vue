@@ -5,7 +5,7 @@ import ImgZoom from './ImgZoom.vue';
 <template>
   <div class="img-content">
     <ImgZoom
-      src="https://xt-show.xitaoinfo.com/seatSelect/seatMap.jpg"
+      src="https://xt-show.xitaoinfo.com/seatSelect/seatMap1219.jpg"
       :minScale="0.8"
       :maxScale="2"
       containerHeight="500px"
