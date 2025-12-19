@@ -33,6 +33,7 @@ import ToolPasteImage from "./components/ToolPasteImage.vue";
 import ToolColorPicker from "./components/ToolColorPicker.vue";
 import ToolJsonEditor from "./components/ToolJsonEditor.vue";
 import DocToPdf from "./components/DocToPdf.vue";
+import ExcelToJson from "./components/ExcelToJson.vue";
 
 export default {
   name: "App",
@@ -46,7 +47,8 @@ export default {
         { name: "剪贴板粘贴保存", component: "ToolPasteImage" },
         { name: "屏幕取色器", component: "ToolColorPicker" },
         { name: "JSON 编辑器", component: "ToolJsonEditor" },
-        { name: "Doc转Pdf", component: "DocToPdf" }
+        { name: "Doc转Pdf", component: "DocToPdf" },
+        { name: "Excel转Json", component: "ExcelToJson" }
       ]
     };
   },
@@ -56,7 +58,8 @@ export default {
     ToolPasteImage,
     ToolColorPicker,
     ToolJsonEditor,
-    DocToPdf
+    DocToPdf,
+    ExcelToJson
   }
 };
 </script>
