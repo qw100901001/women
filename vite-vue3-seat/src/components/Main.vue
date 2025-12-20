@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, onUnmounted, watch } from "vue";
 // 导入JSON数据文件
-import tableList from "@/assets/table.json";
+import tableList from "@/assets/table1013.json";
 import Error from "@/components/Error.vue";
 import List from "@/components/List.vue";
 

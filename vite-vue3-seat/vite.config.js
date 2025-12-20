@@ -13,6 +13,18 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src')
     }
   },
+  build: {
+    emptyOutDir: true, // 每次打包清空dist目录，避免旧文件残留
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        // 核心修改：将[contenthash]替换为Rollup支持的[hash]
+        assetFileNames: 'assets/[name].[hash].[ext]', // 样式、图片等资源
+        chunkFileNames: 'assets/[name].[hash].js', // 分包JS
+        entryFileNames: 'assets/[name].[hash].js', // 入口JS（修复错误的核心位置）
+      },
+    },
+  },
   // 开发服务器配置
   server: {
     port: 3004, // 自定义开发服务器端口

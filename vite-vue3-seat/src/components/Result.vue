@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 // 导入JSON数据文件
-import tableList from "@/assets/table.json";
+import tableList from "@/assets/table1013.json";
 
 import { useRouter, useRoute } from "vue-router";
 
