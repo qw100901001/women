@@ -107,13 +107,14 @@ export default {
           result.push(obj);
         }
         this.jsonData = result;
-        const guestData = this.jsonData.reduce((cur, next) => {
-          cur.push({
-            name: next["宾客名称"],
-            value: next["桌号"]
-          });
+        const guestData = this.jsonData.reduce((cur, next, index) => {
+          cur[index] = {};
+          for (let key in next) {
+            cur[index][key] = next[key];
+          }
           return cur;
         }, []);
+        console.log("guestData", guestData);
         this.downloadData(guestData);
       } else {
         this.jsonData = [];
